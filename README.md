@@ -1,29 +1,26 @@
-# Unofficial SteelSeries Keyboard Support
+# Unofficial SteelSeries Engine on Linux
 
-Original post and code written by Michael Lelli here: https://gist.github.com/ToadKing/26c28809b8174ad0e06bfba309cf3ff3
+Inspired by and slightly modified from:
+- https://gist.github.com/ToadKing/26c28809b8174ad0e06bfba309cf3ff3
+- https://github.com/MiddleMan5/steelseries-linux
 
-There are a bunch of Linux gamers out there, some new to the Linux game and some who have been around since the days of rebuilding kernels to get your sound and wireless working. While SteelSeries Engine does not have official Linux support, with some setup you can get parts of SteelSeries Engine running and have some functionality working well.
+This has less prerequisites and works even on **immutable distros like Bazzite**.
 
-<!--more-->
-
-Note that is is all unofficial and not supported by SteelSeries. After this post you will be on your own and there will be bugs.
+Note that is is all unofficial and not supported by SteelSeries. Not everything will work and you should only use the engine to control your devices. Things like Moments etc will NOT work.
 
 ## Prerequisites
 
-* **Wine** - At least version 4.12 is recommended since that version [fixes a bug with some HID reports](https://bugs.winehq.org/show_bug.cgi?id=47013). Without that version, some devices won't work correctly.
-* **udev** - Unless you're using an obscure/old distro you probably already have this.
-* **Python 3** - Python 2 might also work but I have not tested it. It's time to upgrade anyway.
-* **gnu make** - Install setup scripts and udev rules
-* Your favorite distro of **Linux**.
+* **Lutris** - Lutris is needed to actually install the Steelseries app. **See below**.
+* **Python 3** - you most probably already have this.
 
 
 ## Setup (automatic)
 
-Clone this repo, setup the above prerequisites, and run `make install`
+Clone this repo, then simply run `./install.sh`.
 
 ## Setup (manual)
 
-### udev Rules
+### udev rules
 To configure the firmware on SteelSeries devices, you will need to send it HID reports through the **hidraw** kernel driver. However by default the device files the driver creates are only readable and writable by the root user for security purposes. Rather than just give read and write permission to everything, we are going to make a udev rule to only allow read and write access to the devices we need.
 
 Start by creating this udev rule file in `/etc/udev/rules.d/98-steelseries.rules`:
@@ -150,40 +147,20 @@ Once you create this file, make sure the execute bit on the file is set so the u
 
 (Notice that some filea have "crw-rw-rw-" permissions. That means they have read and write support for everyone.)
 
-### Wine Setup
-
-You must make a small change to your Wine prefix to get SteelSeries Engine to work correctly. By default, Wine makes fake plug-and-play devices from SDL devices. However, for SteelSeries Engine we will need full proper plug-and-play support. To do that, we will have to set the **HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\WineBus** registry key. Value **Enable SDL** must be 0. This can be set with this command:
-
-    wine reg add HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Services\\WineBus /v Enable\ SDL /t Reg_Dword /d 0
-
-Optionally, if you have a device with an OLED screen and want proper Engine Apps support you will need to supply "Arial Bold" and "Arial Black" font files. Different distros can install these files in different places and under different names, but you will want to put them under `drive_c/windows/Fonts/` in your Wine prefix and use the filenames `arialbd.ttf` and `ariblk.ttf` respectively.
-
-    # Change these paths to your respective files.
-    cp /usr/share/fonts/TTF/arialbd.ttf ~/.wine/drive_c/windows/Fonts/arialbd.ttf
-    cp /usr/share/fonts/TTF/ariblk.ttf ~/.wine/drive_c/windows/Fonts/ariblk.ttf
-
-If you don't have the Arial fonts, you could try an equivalent replacement like Liberation Sans, although this is unsupported and untested.
-
 ### Installing SteelSeries Engine
 
-Installation works very similarly to Windows: Simply run the installer exe and follow the steps. Note that during installation the driver installation process might crash or hang due to missing functionality in Wine. To work around this, simply kill the `win_driver_installer.exe` process if it hangs. The installer will continue along after it's killed.
+- After you run the installation script (and reboot), you can install Steelseries Engine in Lutris.
+- Open Lutris -> click on **+** icon
+- Choose `Search the Lutris website for installers`
+- Search for `Steelseries GG` (**important** make sure you don't choose `Steelseries Engine` this installation is outdated and won't work)
+- Click install and follow the instructions
 
 ## What Works
 
-* Configuring non-key binding settings on most devices
-* Some Engine Apps, like PrismSync, ImageSync, and even Discord! (Discord requires having Discord running on a local Linux client, not a web browser.)
+* Changing settings for most of your Steelseries devices (eg. mouse DPI)
+* Prism to control light effects on your Steelseries devices
 
 ## What Doesn't
 
-* The taskbar icon doesn't work. This is probably a Wine bug. If you want to stop SteelSeries Engine you must kill the process or shutdown wine with `wineserver -k`.
 * Device hotplugging does not work. If you unplug a device you will need to restart Engine for it to show up again.
-* App detection does not work.
-* Features requiring driver support. Depending on the device this includes some or all button bindings and macros.
-    * Devices that have onboard macro support, like the Rival 700 and the new Apex 7 and Apex Pro, will have functional macros, but not other key bindings like launch application.
-* Devices with software-driver virtual surround will not have configurable surround sound.
-* Arctis 3 support does not work.
-* No devices are tested on Wine at all, and there could be random bugs anywhere.
-
-## What Else
-
-This support is unofficial and bugs will be abundant. While we won't provide official Linux support at this time, we will be open to talk with devs who are looking to fix bugs in Wine or other Linux software to better support SteelSeries products. Please feel free to drop us a line at the tech blog email at the bottom of the page if you want to get in touch.
+* You should generally only use Engine as pointed above and assume everything else will not work.

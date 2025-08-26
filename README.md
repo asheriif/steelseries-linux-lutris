@@ -10,7 +10,7 @@ Note that is is all unofficial and not supported by SteelSeries. Not everything 
 
 ## Prerequisites
 
-* **Lutris** - Lutris is needed to actually install the Steelseries app. **See below**.
+* **Lutris** - Lutris is needed to actually install the Steelseries app after the setup here is done. **See below**.
 * **Python 3** - you most probably already have this.
 
 
@@ -152,7 +152,7 @@ Once you create this file, make sure the execute bit on the file is set so the u
 - After you run the installation script (and reboot), you can install Steelseries Engine in Lutris.
 - Open Lutris -> click on **+** icon
 - Choose `Search the Lutris website for installers`
-- Search for `Steelseries GG` (**important** make sure you don't choose `Steelseries Engine` this installation is outdated and won't work)
+- Search for `Steelseries GG` (**important** make sure you don't choose `Steelseries Engine` this installation is outdated and won't work) (https://lutris.net/games/steelseries-gg/)
 - Click install and follow the instructions
 
 ## What Works

@@ -1,5 +1,7 @@
 # Unofficial SteelSeries Engine on Linux
 
+![Screenshot](screenshot.png)
+
 Inspired by and slightly modified from:
 - https://gist.github.com/ToadKing/26c28809b8174ad0e06bfba309cf3ff3
 - https://github.com/MiddleMan5/steelseries-linux
@@ -152,7 +154,7 @@ Once you create this file, make sure the execute bit on the file is set so the u
 - After you run the installation script (and reboot), you can install Steelseries Engine in Lutris.
 - Open Lutris -> click on **+** icon
 - Choose `Search the Lutris website for installers`
-- Search for `Steelseries GG` (**important** make sure you don't choose `Steelseries Engine` this installation is outdated and won't work) (https://lutris.net/games/steelseries-gg/)
+- Search for `Steelseries GG` (**important** make sure you don't choose `Steelseries Engine` this installation is outdated and won't work). Use this https://lutris.net/games/steelseries-gg/
 - Click install and follow the instructions
 
 ## What Works
